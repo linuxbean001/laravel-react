@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+.center{
+ font-family: 'Raleway', sans-serif;
+ background-color: burlywood;
+ position: absolute;
+ height: 100%;
+ width: 100%;
+ justify-content: center;
+ display: flex;
+ align-items: center;
+}
+
+.form-submit{
+  display: inline-block;
+  height: auto;
+  width: auto;
+  border-radius: 7px;
+  border: 1px solid #00b894;
+  margin: 3px 5px;
+
+}
+.form-submit:hover{
+  opacity: 0.6;
+}

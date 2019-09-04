@@ -18,6 +18,31 @@ export default class AuthService{
       return Promise.resolve(result)
     })
   }
+  
+  edit(uservo){
+    console.log('user value',uservo);
+    var config = {
+      headers: { 'Content-Type': 'application/json' }
+    };
+    return axios.put(this.domain + 'api/update/' +uservo.id, uservo,config)
+     .then((result)=>{
+       console.log('result result',result);
+       
+     })
+  }
+ getProfile = () => {
+   console.log('user',decode(localStorage.getItem('token')).sub);
+   
+   return axios.get( this.domain + 'api/user_profile/' + decode(localStorage.getItem('token')).sub)
+       .then(result=> {
+           console.log('backend',result.data.sub)
+           return result.data
+       })
+       .catch(err => {
+           console.log(err)
+       })
+}
+
   setToken(token){
     const decodeToken = decode(token);
     console.log('cvd',decodeToken.sub);
@@ -30,5 +55,4 @@ export default class AuthService{
   removeToken(){
     localStorage.removeItem('token')
   }
-
 }

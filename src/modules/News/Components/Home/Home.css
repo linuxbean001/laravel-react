@@ -8,7 +8,7 @@ body {
   margin-top: 20px;
   max-width: 600px;
   height: 420px;
-  width:800px;
+  width:900px;
   border: 1px solid #9C9C9C;
   background-color: #EAEAEA;
 }
@@ -30,3 +30,4 @@ body {
 .home{
   text-align: center;
 }
+

@@ -24,7 +24,6 @@ class UserController extends Controller
             'username' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6', 
-            'post' => 'required|string',
             'contact' => 'required|string|max:255',
         ]);
 
@@ -37,7 +36,6 @@ class UserController extends Controller
             'username' => $request->json()->get('username'),
             'email' => $request->json()->get('email'),
             'password' => Hash::make($request->json()->get('password')),
-            'post' => $request->json()->get('post'),
             'contact' => $request->json()->get('contact'),
         ]);
 
@@ -61,6 +59,70 @@ class UserController extends Controller
         return response()->json( compact('token') );
     }
 
+    public function update(Request $request, $id)
+{
+$user = User::findOrFail($id);
+$user->update($request->all());
+
+$token = JWTAuth::fromUser($user);
+
+return response()->json(compact('user','token'),200);
+}
+
+
+public function user_profile(Request $request, $id)
+{
+$user = User::findOrFail($id);
+$token = JWTAuth::fromUser($user);
+
+return response()->json(compact('user','token'),200);
+}
+
+public function user_list(Request $request)
+{
+$users = User::all();
+return $users;
+}
+
+public function delete(Request $request, $id)
+{
+$user = User::findOrFail($id);
+$user->delete();
+
+return response()->json(['status' => 'Deleted Successfully']);
+}
+
+
+public function register_many(Request $requests)
+{
+$requestArray = array();
+for($i=0; $i<10; $i++){ 
+if($requests[$i]['email']==''){
+break;
+} 
+$validator = Validator::make($requests[$i] , [
+'name' => 'required|string|max:255',
+'username' => 'required|string|max:255',
+'email' => 'required|string|email|max:255|unique:users',
+'password' => 'required|string|min:6', 
+'contact' => 'required|string|max:255',
+]);
+if($validator->fails()){
+$requestArray[$requests[$i]['email']] = response()->json($validator->errors()->toJson(), 400);
+continue;
+}
+
+$user = User::create([
+'name' => $requests[$i]['name'],
+'username' => $requests[$i]['username'],
+'email' => $requests[$i]['email'],
+'password' => Hash::make($requests[$i]['password']),
+'contact' => $requests[$i]['contact'],
+]);
+$token = JWTAuth::fromUser($user);
+} 
+return $requestArray;
+}
     
 
     public function getAuthenticatedUser()

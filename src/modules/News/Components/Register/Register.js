@@ -82,7 +82,7 @@ export default class Register extends Component {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="contact" className="text-info">Contact:</label><br></br>
-                                <input type="text" name="conatact" id="contact" ref="contact" value={this.state.fields["contact"]} onChange={this.handleChange.bind(this,"password")} className="form-control" />
+                                <input type="text" name="contact" id="contact" ref="contact" value={this.state.fields["contact"]} onChange={this.handleChange.bind(this,"contact")} className="form-control" />
                             </div>
                             <div className="form-group">
                                 <input type="submit" name="submit" className="btn btn-info btn-md" value="Register"/>
